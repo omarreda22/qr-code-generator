@@ -1,42 +1,50 @@
-{% extends '../../base.html' %}
-{% load static %}
-{% block title %}QR Code Generator | Create{% endblock title %}
+{% extends '../../base.html' %} {% load static %} {% block title %}QR Code
+Generator | Create{% endblock title %} 
 {% block content %}
-{% comment %} <section class="bg-white dark:bg-gray-900">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:px-12 mt-10">
-        
-        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Create Your QR Code with Us Free.</h1>
-        <br>
-        <form class=" text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 mt-8">
-            <label for="base-input" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Enter URL</label>
-            <input type="url" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <button href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 mt-8">
-                Create
-            </button>
+<section class="bg-white dark:bg-gray-900">
+  <div
+    class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
+  >
+    <div class="mr-auto place-self-center lg:col-span-8">
+      <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:px-12 mt-10">
+        <h1
+          class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-3xl lg:text-3xl dark:text-white text-center"
+        >
+          Create Your QR Code with Us Free.
+        </h1>
+        <form 
+        id="qr-form"
+        class="text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-72 dark:text-gray-400 mt-8"
+        >   
+        {% csrf_token %}
+          <label
+            for="base-input"
+            class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white mt-5"
+            >Enter URL</label
+          >
+          <input
+            type="url"
+            id="qr-url"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value="https://"
+          />
+          <button
+            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-800 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 mt-8"
+          >
+            Create
+          </button>
+          <a id="qr-download" href="" type="button" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-md px-5 py-2.5 text-center mr-2 mb-2 ml-5 display" download>Download</a>
         </form>
+      </div>
     </div>
-    <div>
-        <img class="h-auto max-w-lg mx-auto mt-0 display" src="{% static "images/qr-home.png" %}" alt="image description">
+    <div class="lg:mt-0 lg:col-span-4">
+        <img id="qr-image" class="display" src="" alt="QRImage">
+        
     </div>
-</section> {% endcomment %}
-
-<section class="bg-white dark:bg-gray-900 mt-9">
-    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-        <div class="mr-auto place-self-center lg:col-span-8">
-            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:px-12 mt-10">
-                <form class=" text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-72 dark:text-gray-400 mt-8">
-                    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-3xl lg:text-3xl dark:text-white text-center" >Create Your QR Code with Us Free.</h1>
-                    <label for="base-input" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white mt-5">Enter URL</label>
-                    <input type="url" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <button href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-800 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 mt-8">
-                        Create
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class=" lg:mt-0 lg:col-span-4 lg:flex">
-            <img src="{% static "images/qr-home.png" %}" alt="mockup">
-        </div>                
-    </div>
+  </div>
 </section>
 {% endblock content %}
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src={% static "scripts/custom.js" %}></script>
+{% endblock %}
